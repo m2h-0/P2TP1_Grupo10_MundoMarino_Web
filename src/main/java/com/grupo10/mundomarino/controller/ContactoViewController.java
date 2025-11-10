@@ -7,14 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class ContactoViewController {
-
-    // Página principal (index)
-    @GetMapping({"/", "/index"})
-    public String index() {
-        log.info("Accediendo a la página principal");
-        return "index";// Spring Boot busca templates/index.html (por Thymeleaf)
-    }
-
     // Página de lista de contactos
     @GetMapping("/lista-contactos")
     public String listaContactos() {
