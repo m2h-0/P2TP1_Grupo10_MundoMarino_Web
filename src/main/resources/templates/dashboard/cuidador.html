@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: headFrag('Cuidador - Mundo Marino')"></head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+
+  <main class="container">
+    <h1>Panel de Cuidador</h1>
+    <p>Bienvenido, <b th:text="${#authentication.name}">Cuidador</b></p>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Animales a cargo</h3>
+        <p>Lista y estado de los animales asignados</p>
+        <a th:href="@{/cuidador/animales}" class="btn btn-primary">Ver Animales</a>
+      </div>
+
+      <div class="card">
+        <h3>Actualizar ficha</h3>
+        <p>Editar datos y fotos de animales</p>
+        <a th:href="@{/cuidador/editar}" class="btn btn-secondary">Abrir</a>
+      </div>
+    </section>
+  </main>
+
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
+</html>

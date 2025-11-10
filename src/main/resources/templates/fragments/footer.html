@@ -1,0 +1,11 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body th:fragment="footerFrag">
+    <footer class="site-footer">
+      <div class="container">
+        <p>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span> Sistema de Gestión Mundo Marino</p>
+        <small>Proyecto interno — solo uso autorizado</small>
+      </div>
+    </footer>
+  </body>
+</html>

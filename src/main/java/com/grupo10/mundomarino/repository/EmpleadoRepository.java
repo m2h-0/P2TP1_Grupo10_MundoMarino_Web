@@ -5,5 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmpleadoRepository extends JpaRepository<Empleado, String> {
-    List<Empleado> findByTipo(String tipo); // ADMIN, GUIA, CUIDADOR
+    // filtrar por tipo: ADMIN, GUIA, CUIDADOR
+    List<Empleado> findByTipo(String tipo); 
 }

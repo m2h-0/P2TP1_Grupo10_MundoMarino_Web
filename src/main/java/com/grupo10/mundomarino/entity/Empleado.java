@@ -24,4 +24,12 @@ public class Empleado {
     
     @Column(name = "fecha_ingreso")
     private LocalDate fechaIngreso;
+    
+    @Column(name = "tipo", nullable = false, length = 20, updatable = false, insertable = true)
+    private String tipo;
+
+    @PrePersist
+    public void asignarTipo() {
+        this.tipo = this.getClass().getSimpleName().toUpperCase(); // "GUIA", "CUIDADOR", "ADMINISTRADOR"
+    }
 }
