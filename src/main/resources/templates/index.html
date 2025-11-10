@@ -4,24 +4,27 @@
 <body>
   <div th:replace="fragments/header :: mainNav"></div>
 
-  <main class="container hero">
-    <h1 class="hero-title">Gestor Mundo Marino</h1>
-    <p class="hero-subtitle">Plataforma para que empleados visualicen y administren información sobre itinerarios, zonas y animales según su rol.</p>
-
-    <div class="buttons-container">
-      <a th:href="@{/login}" class="btn btn-primary">Iniciar sesión</a>
-      <a th:href="@{/admin/dashboard}" class="btn btn-secondary" sec:authorize="hasRole('ADMIN')">Dashboard</a>
+  <main class="container">
+    <div class="landing-container">
+      <!-- Imagen a la izquierda -->
+      <div class="landing-image">
+        <img th:src="@{/images/portada.jpg}" alt="Un cuidador acaricia la cabeza de un Lobo Marino, ambos se ven muy felices" class="hero-img">
+      </div>
+      
+      <!-- Contenido a la derecha -->
+      <div class="landing-content">
+        <h1 class="landing-title">Portal de Gestión para Empleados</h1>
+        <p class="landing-description">
+          Bienvenido a la plataforma interna de Fundación Mundo Marino. 
+          Desde aquí podrás acceder a las herramientas específicas de tu rol 
+          para gestionar itinerarios, animales e información del parque.
+        </p>
+        
+        <div class="landing-actions">
+          <a th:href="@{/dashboard}" class="btn btn-primary">Dashboard</a>
+        </div>
+      </div>
     </div>
-
-    <section class="features">
-      <h2>Qué ofrece el gestor</h2>
-      <ul>
-        <li>Panel de administración para gestionar empleados, especies y métricas.</li>
-        <li>Panel de guía para ver y gestionar itinerarios asignados.</li>
-        <li>Panel de cuidador para listar y actualizar animales a cargo.</li>
-        <li>Autorización por roles y acceso controlado a vistas y acciones.</li>
-      </ul>
-    </section>
   </main>
 
   <div th:replace="fragments/footer :: footerFrag"></div>
