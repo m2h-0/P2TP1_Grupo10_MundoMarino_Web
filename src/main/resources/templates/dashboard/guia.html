@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: headFrag('Guía - Mundo Marino')"></head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+
+  <main class="container">
+    <h1>Panel de Guía</h1>
+    <p>Bienvenido, <b th:text="${#authentication.name}">Guía</b></p>
+
+    <section class="grid">
+      <div class="card">
+        <h3>Mis Itinerarios</h3>
+        <p>Lista de itinerarios asignados</p>
+        <a th:href="@{/guia/itinerarios}" class="btn btn-primary">Ver Itinerarios</a>
+      </div>
+
+      <div class="card">
+        <h3>Recorridos</h3>
+        <p>Ver detalles de cada recorrido</p>
+        <a th:href="@{/guia/recorridos}" class="btn btn-secondary">Abrir</a>
+      </div>
+    </section>
+  </main>
+
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
+</html>

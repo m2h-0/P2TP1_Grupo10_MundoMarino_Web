@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:fragment="headFrag(title)">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title th:text="${title}">Fundación Mundo Marino</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    </head>
+
+    <body th:fragment="mainNav">
+        <header class="site-header">
+            <div class="header-inner container">
+                <!-- Contenedor para logo y título alineados a la izquierda -->
+
+                <div class="brand-container">
+                    <a class="brand" th:href="@{/}"><img th:src="@{/images/logo-txt.jpg}" alt="Logo Mundo Marino" class="nav-logo"></a>
+                    <a class="brand" th:href="@{/}"><img th:src="@{/images/fmm.png}" alt="Logo Fundación Mundo Marino" class="nav-logo"></a>
+                </div>
+
+                <nav class="main-nav">
+                    <span sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/dashboard/admin}">Gestión de Empleados</a>
+                    </span>
+
+                    <span sec:authorize="hasRole('GUIA')">
+                        <a th:href="@{/dashboard/guia/}">Mis Itinerarios</a>
+                    </span>
+
+                    <span sec:authorize="hasRole('CUIDADOR')">
+                        <a th:href="@{/dashboard/cuidador/}">Mis Animales</a>
+                    </span>
+
+                    <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-secondary">Cerrar sesión</a>
+                    <a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-primary">Iniciar sesión</a>
+                </nav>
+            </div>
+        </header>
+    </body>
+</html>

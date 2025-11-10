@@ -1,27 +1,32 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mundo Marino - Inicio</title>
-    <link rel="stylesheet" th:href="@{/css/estilos-index.css}">
-</head>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/header :: headFrag('Mundo Marino - Gestor')"></head>
 <body>
-    <div class="container">
-        <h1>📇 Mundo Marino</h1>
-        <p class="subtitle">Sistema de gestión de Mundo Marino con Spring Boot e Hibernate</p>
+  <div th:replace="fragments/header :: mainNav"></div>
+
+  <main class="container">
+    <div class="landing-container">
+      <!-- Imagen a la izquierda -->
+      <div class="landing-image">
+        <img th:src="@{/images/portada.jpg}" alt="Un cuidador acaricia la cabeza de un Lobo Marino, ambos se ven muy felices" class="hero-img">
+      </div>
+      
+      <!-- Contenido a la derecha -->
+      <div class="landing-content">
+        <h1 class="landing-title">Portal de Gestión para Empleados</h1>
+        <p class="landing-description">
+          Bienvenido a la plataforma interna de Fundación Mundo Marino. 
+          Desde aquí podrás acceder a las herramientas específicas de tu rol 
+          para gestionar itinerarios, animales e información del parque.
+        </p>
         
-        <div class="buttons-container">
-            <a th:href="@{/lista-contactos}" class="btn btn-primary">
-                <span class="icon">📋</span>
-                Ver Lista de Contactos
-            </a>
-            
-            <a th:href="@{/agregar-contacto}" class="btn btn-secondary">
-                <span class="icon">➕</span>
-                Agregar Nuevo Contacto
-            </a>
+        <div class="landing-actions">
+          <a th:href="@{/dashboard}" class="btn btn-primary">Dashboard</a>
         </div>
+      </div>
     </div>
+  </main>
+
+  <div th:replace="fragments/footer :: footerFrag"></div>
 </body>
 </html>
