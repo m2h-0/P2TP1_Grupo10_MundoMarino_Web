@@ -28,11 +28,4 @@ public class ContactoViewController {
         log.info("Accediendo a agregar contacto");
         return "agregar-contacto";
     }
-
-    // Página de login
-    @GetMapping("/login")
-    public String login() {
-        log.info("Accediendo a login");
-        return "login";
-    }
 }

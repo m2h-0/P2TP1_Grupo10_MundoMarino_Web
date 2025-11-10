@@ -1,4 +1,4 @@
-package com.grupo10.mundomarino.config;
+package com.grupo10.mundomarino.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
         return User.withUsername(usuario.getUsername())
-                   .password(usuario.getPassword()) // ya encriptada
+                   .password(usuario.getPassword()) // ya encriptado en UsuarioService
                    .roles(usuario.getRol())
                    .build();
     }
