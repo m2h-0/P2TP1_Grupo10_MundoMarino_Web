@@ -17,11 +17,12 @@ public class AdminController {
         return "dashboard/admin";
     }
 
-    @GetMapping("/especies")
-    public String gestionEspecies(Model model) {
-        model.addAttribute("titulo", "Gestión de Especies");
-        return "admin/especies";
-    }
+    // Ahora en EspecieController
+    // @GetMapping("/especies")
+    // public String gestionEspecies(Model model) {
+    //     model.addAttribute("titulo", "Gestión de Especies");
+    //     return "admin/especies";
+    // }
 
     @GetMapping("/empleados")
     public String gestionEmpleados(Model model) {
