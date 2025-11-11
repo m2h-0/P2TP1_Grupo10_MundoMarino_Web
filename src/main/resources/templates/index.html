@@ -1,32 +1,43 @@
 <!doctype html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="fragments/header :: headFrag('Mundo Marino - Gestor')"></head>
-<body>
-  <div th:replace="fragments/header :: mainNav"></div>
+    <head th:replace="fragments/header :: headFrag('Mundo Marino - Gestor')"></head>
+    <body>
+        <div th:replace="fragments/header :: mainNav"></div>
 
-  <main class="container">
-    <div class="landing-container">
-      <!-- Imagen a la izquierda -->
-      <div class="landing-image">
-        <img th:src="@{/images/portada.jpg}" alt="Un cuidador acaricia la cabeza de un Lobo Marino, ambos se ven muy felices" class="hero-img">
-      </div>
-      
-      <!-- Contenido a la derecha -->
-      <div class="landing-content">
-        <h1 class="landing-title">Portal de Gestión para Empleados</h1>
-        <p class="landing-description">
-          Bienvenido a la plataforma interna de Fundación Mundo Marino. 
-          Desde aquí podrás acceder a las herramientas específicas de tu rol 
-          para gestionar itinerarios, animales e información del parque.
-        </p>
-        
-        <div class="landing-actions">
-          <a th:href="@{/dashboard}" class="btn btn-primary">Dashboard</a>
-        </div>
-      </div>
-    </div>
-  </main>
+        <main class="container">
+            <div class="landing-container">
+                <!-- Imagen a la izquierda -->
+                <div class="landing-image">
+                    <img th:src="@{/images/portada.jpg}" alt="Un cuidador acaricia la cabeza de un Lobo Marino, ambos se ven muy felices" class="hero-img">
+                </div>
 
-  <div th:replace="fragments/footer :: footerFrag"></div>
-</body>
+                <!-- Contenido a la derecha -->
+                <div class="landing-content">
+                    <h1 class="landing-title">Portal de Gestión para Empleados</h1>
+                    <p class="landing-description">
+                        Bienvenido a la plataforma interna de Fundación Mundo Marino. 
+                        Desde aquí podrás acceder a las herramientas específicas de tu rol 
+                        para gestionar itinerarios, animales e información del parque.
+                    </p>
+
+                    <div class="landing-actions">
+
+                        <span sec:authorize="hasRole('ADMIN')">
+                            <a th:href="@{admin}" class="btn btn-primary">Dashboard</a>
+                        </span>
+
+                        <span sec:authorize="hasRole('GUIA')">
+                            <a th:href="@{guia/}" class="btn btn-primary">Dashboard</a>
+                        </span>
+
+                        <span sec:authorize="hasRole('CUIDADOR')">
+                            <a th:href="@{cuidador/}" class="btn btn-primary">Dashboard</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="fragments/footer :: footerFrag"></div>
+    </body>
 </html>
