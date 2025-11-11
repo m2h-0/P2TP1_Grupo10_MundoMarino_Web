@@ -20,9 +20,24 @@
           para gestionar itinerarios, animales e información del parque.
         </p>
         
-        <div class="landing-actions">
+        <!-- <div class="landing-actions">
           <a th:href="@{/dashboard}" class="btn btn-primary">Dashboard</a>
+        </div> -->
+
+        <div class="landing-actions">
+          <span sec:authorize="hasRole('ADMIN')">
+              <a th:href="@{/admin}" class="btn btn-primary">Dashboard</a>
+          </span>
+
+          <span sec:authorize="hasRole('GUIA')">
+              <a th:href="@{/guia}" class="btn btn-primary">Dashboard</a>
+          </span>
+
+          <span sec:authorize="hasRole('CUIDADOR')">
+              <a th:href="@{/cuidador}" class="btn btn-primary">Dashboard</a>
+          </span>
         </div>
+
       </div>
     </div>
   </main>

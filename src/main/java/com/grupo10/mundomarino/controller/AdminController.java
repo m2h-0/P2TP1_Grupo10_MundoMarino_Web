@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-    @GetMapping("/dashboard")
+    @GetMapping
     public String adminDashboard(Model model) {
         model.addAttribute("titulo", "Panel de Administración");
         return "dashboard/admin";
