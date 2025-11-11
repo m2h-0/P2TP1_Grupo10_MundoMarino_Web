@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @PreAuthorize("hasRole('GUIA')")
 public class GuiaController {
 
+    @GetMapping
+    public String guiaDashboard(Model model) {
+        model.addAttribute("titulo", "Panel de Guía");
+        return "dashboard/guia";
+    }
+
     @GetMapping("/itinerarios")
     public String verItinerarios(Model model) {
         model.addAttribute("titulo", "Mis Itinerarios - Mundo Marino");
         return "guia/itinerarios";
     }
 
-    @GetMapping("/dashboard")
-    public String guiaDashboard(Model model) {
-        model.addAttribute("titulo", "Panel de Guía");
-        return "dashboard/guia";
-    }
-
-    @GetMapping("/recorridos")
     public String guiaRecorridos(Model model) {
         model.addAttribute("titulo", "Recorridos");
         return "guia/recorridos";
