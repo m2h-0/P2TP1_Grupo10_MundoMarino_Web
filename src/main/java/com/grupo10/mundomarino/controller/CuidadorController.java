@@ -11,16 +11,16 @@ import org.springframework.ui.Model;
 @PreAuthorize("hasRole('CUIDADOR')")
 public class CuidadorController {
 
+    @GetMapping
+    public String cuidadorDashboard(Model model) {
+        model.addAttribute("titulo", "Panel de Cuidador");
+        return "dashboard/cuidador";
+    }
+
     @GetMapping("/animales")
     public String verAnimales(Model model) {
         model.addAttribute("titulo", "Animales a Cargo");
         return "cuidador/animales";
-    }
-
-    @GetMapping("/dashboard")
-    public String cuidadorDashboard(Model model) {
-        model.addAttribute("titulo", "Panel de Cuidador");
-        return "dashboard/cuidador";
     }
 
     @GetMapping("/editar")

@@ -11,17 +11,18 @@ import org.springframework.ui.Model;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-    @GetMapping("/dashboard")
+    @GetMapping
     public String adminDashboard(Model model) {
         model.addAttribute("titulo", "Panel de Administración");
         return "dashboard/admin";
     }
 
-    @GetMapping("/especies")
-    public String gestionEspecies(Model model) {
-        model.addAttribute("titulo", "Gestión de Especies");
-        return "admin/especies";
-    }
+    // Ahora en EspecieController
+    // @GetMapping("/especies")
+    // public String gestionEspecies(Model model) {
+    //     model.addAttribute("titulo", "Gestión de Especies");
+    //     return "admin/especies";
+    // }
 
     
 }

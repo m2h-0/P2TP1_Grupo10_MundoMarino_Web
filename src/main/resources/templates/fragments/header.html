@@ -19,15 +19,15 @@
 
                 <nav class="main-nav">
                     <span sec:authorize="hasRole('ADMIN')">
-                        <a th:href="@{/admin/empleados}" class="btn btn-primary">Gestión de Empleados</a>
+                        <a th:href="@{/admin}">Gestión de Empleados</a>
                     </span>
 
                     <span sec:authorize="hasRole('GUIA')">
-                        <a th:href="@{/dashboard/guia/}" class="btn btn-primary">Mis Itinerarios</a>
+                        <a th:href="@{/guia}">Mis Itinerarios</a>
                     </span>
 
                     <span sec:authorize="hasRole('CUIDADOR')">
-                        <a th:href="@{/dashboard/cuidador/}" class="btn btn-primary">Mis Animales</a>
+                        <a th:href="@{/cuidador}">Mis Animales</a>
                     </span>
 
                     <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display:inline">
