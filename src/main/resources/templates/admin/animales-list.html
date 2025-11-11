@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Animales - Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+  <main class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+      <h1>Animales</h1>
+      <a th:href="@{/admin/animales}" class="btn btn-primary" style="margin-left:1em;">Refrescar</a>
+    </div>
+
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Cuidador</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          <tr th:each="a : ${animales}">
+            <td th:text="${a.idAnimal}">1</td>
+            <td th:text="${a.nombre}">Nombre</td>
+            <td th:text="${a.especie != null ? a.especie.nombre : '—'}">Especie</td>
+            <td th:text="${a.cuidador != null ? a.cuidador.nombre : 'Sin asignar'}">Cuidador</td>
+            <td>
+              <a th:href="@{/admin/animales/asignar/{id}(id=${a.idAnimal})}" class="btn-table btn-edit">Asignar</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
+</html>
