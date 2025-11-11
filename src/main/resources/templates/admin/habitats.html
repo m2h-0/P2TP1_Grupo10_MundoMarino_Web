@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Habitats</title>
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Habitats</h1>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="card mb-4">
+        <div class="card-header">Crear nuevo habitat</div>
+        <div class="card-body">
+            <form th:action="@{/admin/habitats}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" name="nombre" class="form-control" required/>
+                </div>
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+    </div>
+
+    <form th:action="@{/admin/habitats/search}" method="get" class="mb-3 d-flex">
+        <input name="q" class="form-control me-2" placeholder="Buscar por nombre"/>
+        <button class="btn btn-outline-secondary">Buscar</button>
+    </form>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="h : ${habitats}">
+            <td th:text="${h.idHabitat}">1</td>
+            <td th:text="${h.nombre}">Nombre</td>
+            <td>
+                <form th:action="@{|/admin/habitats/${h.idHabitat}/delete|}" method="post" th:onsubmit="return confirm('Eliminar habitat?');" style="display:inline">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
