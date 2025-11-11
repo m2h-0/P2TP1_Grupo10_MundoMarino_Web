@@ -43,7 +43,7 @@ public class EspecieController {
     }
 
     // Create (form posts nombre, descripcion, zonaId)
-    @PostMapping
+    @PostMapping("guardar")
     public String create(@RequestParam String nombre,
                          @RequestParam(required = false) String descripcion,
                          @RequestParam(name = "zonaId", required = false) Integer zonaId,
