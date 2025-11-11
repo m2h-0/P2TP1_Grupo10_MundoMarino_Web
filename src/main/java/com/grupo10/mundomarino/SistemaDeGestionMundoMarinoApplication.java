@@ -11,7 +11,7 @@ public class SistemaDeGestionMundoMarinoApplication {
         System.out.println("==============================================");
         System.out.println("Aplicación Sistema de Gestión Mundo Marino iniciada!");
         System.out.println("URL: http://localhost:8080/mundomarino");
-        System.out.println("API REST: http://localhost:8080/mundomarino/api/contactos");
+        System.out.println("API REST: http://localhost:8080/mundomarino/api/sistema");
         System.out.println("==============================================");
 	}
 

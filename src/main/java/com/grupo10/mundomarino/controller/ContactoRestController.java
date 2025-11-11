@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/contactos")
+@RequestMapping("/api/sistema")
 @CrossOrigin(origins = "*")
 @Slf4j
 public class ContactoRestController {
