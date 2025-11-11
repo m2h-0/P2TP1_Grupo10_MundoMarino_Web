@@ -19,4 +19,12 @@ public class Zona {
     
     @Column(nullable = false, length = 100)
     private String nombre;
+
+    // para Thymeleaf forms (usa z.id en vez de idZona)
+    // public Integer getId() {
+    //     return this.idZona;
+    // }
+    // public void setId(Integer id) {
+    //     this.idZona = id;
+    // }
 }

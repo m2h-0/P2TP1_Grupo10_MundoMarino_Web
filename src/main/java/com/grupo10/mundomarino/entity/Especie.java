@@ -31,4 +31,20 @@ public class Especie {
     @ManyToOne
     @JoinColumn(name = "id_zona")
     private Zona zona;
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
+    }
+
+    // para Thymeleaf forms (usa e.id en vez de idEspecie)
+    // public Integer getId() {
+    //     return this.idEspecie;
+    // }
+    // public void setId(Integer id) {
+    //     this.idEspecie = id;
+    // }
 }
