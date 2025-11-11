@@ -25,10 +25,10 @@ public class AnimalServiceDtoImpl implements AnimalServiceDto {
     private final EmpleadoRepository empleadoRepo;
 
     public AnimalServiceDtoImpl(AnimalRepository repo,
-                                EspecieRepository especieRepo,
-                                HabitatRepository habitatRepo,
-                                ZonaRepository zonaRepo,
-                                EmpleadoRepository empleadoRepo) {
+            EspecieRepository especieRepo,
+            HabitatRepository habitatRepo,
+            ZonaRepository zonaRepo,
+            EmpleadoRepository empleadoRepo) {
         this.repo = repo;
         this.especieRepo = especieRepo;
         this.habitatRepo = habitatRepo;
@@ -50,19 +50,33 @@ public class AnimalServiceDtoImpl implements AnimalServiceDto {
 
     @Override
     public AnimalDto guardarDesdeDto(AnimalDto dto) {
-        Animal a = new Animal();
-        // si id existe, recuperar y actualizar
-        if (dto.getIdAnimal() != null) {
-            a = repo.findById(dto.getIdAnimal()).orElse(new Animal());
+        final Animal animal = obtenerOCrearAnimal(dto);
+
+        animal.setNombre(dto.getNombre());
+        animal.setDescripcion(dto.getDescripcion());
+
+        if (dto.getIdEspecie() != null) {
+            especieRepo.findById(dto.getIdEspecie()).ifPresent(animal::setEspecie);
         }
-        a.setNombre(dto.getNombre());
-        a.setDescripcion(dto.getDescripcion());
-        if (dto.getIdEspecie() != null) especieRepo.findById(dto.getIdEspecie()).ifPresent(a::setEspecie);
-        if (dto.getIdHabitat() != null) habitatRepo.findById(dto.getIdHabitat()).ifPresent(a::setHabitat);
-        if (dto.getIdZona() != null) zonaRepo.findById(dto.getIdZona()).ifPresent(a::setZona);
-        if (dto.getIdCuidador() != null) empleadoRepo.findById(dto.getIdCuidador()).ifPresent(emp -> a.setCuidador((com.grupo10.mundomarino.entity.Cuidador) emp));
-        Animal saved = repo.save(a);
+        if (dto.getIdHabitat() != null) {
+            habitatRepo.findById(dto.getIdHabitat()).ifPresent(animal::setHabitat);
+        }
+        if (dto.getIdZona() != null) {
+            zonaRepo.findById(dto.getIdZona()).ifPresent(animal::setZona);
+        }
+        if (dto.getIdCuidador() != null) {
+            empleadoRepo.findById(dto.getIdCuidador()).ifPresent(emp -> animal.setCuidador((com.grupo10.mundomarino.entity.Cuidador) emp));
+        }
+
+        Animal saved = repo.save(animal);
         return AnimalMapper.toDto(saved);
+    }
+
+    private Animal obtenerOCrearAnimal(AnimalDto dto) {
+        if (dto.getIdAnimal() != null) {
+            return repo.findById(dto.getIdAnimal()).orElse(new Animal());
+        }
+        return new Animal();
     }
 
     @Override
