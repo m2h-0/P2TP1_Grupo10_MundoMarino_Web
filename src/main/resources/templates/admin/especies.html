@@ -1,81 +1,53 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Especies</title>
+    <meta charset="utf-8">
+    <title>Especie - Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<div class="container mt-4">
-    <h1>Especies</h1>
+    <div th:replace="fragments/header :: mainNav"></div>
 
-    <!-- Mensajes -->
-    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <main class="container">
+        <h1 th:text="${#strings.isEmpty(especie.idEspecie) ? 'Nueva Especie' : 'Editar Especie'}">Formulario</h1>
 
-    <!-- Formulario crear nueva especie -->
-    <div class="card mb-4">
-        <div class="card-header">Crear nueva especie</div>
-        <div class="card-body">
-            <form th:action="@{/admin/especies}" th:object="${especie}" method="post">
-                <div class="mb-3">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" th:field="*{nombre}" class="form-control" required/>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Descripción</label>
-                    <textarea th:field="*{descripcion}" class="form-control"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Zona</label>
-                    <!-- requerido solo si hay zonas... -->
-                    <select th:field="*{zona.idZona}" class="form-select" th:attr="required=${!#lists.isEmpty(zonas)}">
-                        <!-- ... si no, placeholder -->
-                        <option th:if="${#lists.isEmpty(zonas)}" th:value="'-'" selected>Sin zonas disponibles</option>
+        <form th:action="@{/admin/especies/guardar}" th:object="${especie}" method="post">
+            <div class="form-group">
+                <label>ID</label>
+                <input type="text" th:field="*{idEspecie}" placeholder="ID (autogenerado al crear)" 
+                       th:attr="readonly=${especie.idEspecie != null}" />
+            </div>
 
-                        <!-- Normal list -->
-                        <option th:each="z : ${zonas}" th:value="${z.idZona}" th:text="${z.nombre}">Zona</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Crear</button>
-            </form>
-        </div>
-    </div>
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" required/>
+            </div>
 
-    <!-- Buscador -->
-    <form th:action="@{/admin/especies/search}" method="get" class="mb-3 d-flex">
-        <input name="q" class="form-control me-2" placeholder="Buscar por nombre"/>
-        <button class="btn btn-outline-secondary">Buscar</button>
-    </form>
+            <div class="form-group">
+                <label>Nombre Científico</label>
+                <input type="text" th:field="*{nombreCientifico}" />
+            </div>
 
-    <!-- Tabla de especies -->
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Zona</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="e : ${especies}">
-            <td th:text="${e.idEspecie}">1</td>
-            <td th:text="${e.nombre}">Nombre</td>
-            <td th:text="${e.descripcion}">Desc</td>
-            <td th:text="${e.zona != null ? e.zona.nombre : '—'}">Zona</td>
-            <td>
-                <a th:href="@{|/admin/especies/${e.idEspecie}/edit|}" class="btn btn-sm btn-outline-primary">Editar</a>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea th:field="*{descripcion}" rows="4"></textarea>
+            </div>
 
-                <form th:action="@{|/admin/especies/${e.idEspecie}/delete|}" method="post" th:onsubmit="return confirm('Eliminar especie?');" style="display:inline">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+            <div class="form-group">
+                <label>Zona</label>
+                <select th:field="*{zona.idZona}">
+                    <option value="" th:if="${#lists.isEmpty(zonas)}" selected>Sin zonas disponibles</option>
+                    <option th:each="z : ${zonas}" th:value="${z.idZona}" th:text="${z.nombre}">Zona</option>
+                </select>
+            </div>
 
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/admin/especies}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <div th:replace="fragments/footer :: footerFrag"></div>
 </body>
 </html>
