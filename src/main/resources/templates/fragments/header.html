@@ -19,7 +19,7 @@
 
                 <nav class="main-nav">
                     <span sec:authorize="hasRole('ADMIN')">
-                        <a th:href="@{/dashboard/admin}">Gestión de Empleados</a>
+                        <a th:href="@{/admin/empleados}">Gestión de Empleados</a>
                     </span>
 
                     <span sec:authorize="hasRole('GUIA')">

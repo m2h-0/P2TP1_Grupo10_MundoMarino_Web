@@ -23,9 +23,5 @@ public class AdminController {
         return "admin/especies";
     }
 
-    @GetMapping("/empleados")
-    public String gestionEmpleados(Model model) {
-        model.addAttribute("titulo", "Gestión de Empleados");
-        return "admin/empleados";
-    }
+    
 }
