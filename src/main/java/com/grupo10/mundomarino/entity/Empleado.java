@@ -29,6 +29,18 @@ public class Empleado {
     @Column(name = "tipo", nullable = false, length = 20, insertable = true)
     private String tipo;
 
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
+// getter y setter (o usa Lombok @Data ya presente)
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
     @PrePersist
     public void prePersist() {
         if (this.fechaIngreso == null) {

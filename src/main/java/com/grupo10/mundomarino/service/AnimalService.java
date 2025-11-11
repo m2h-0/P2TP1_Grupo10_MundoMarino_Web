@@ -5,6 +5,7 @@ import com.grupo10.mundomarino.entity.Cuidador;
 import com.grupo10.mundomarino.entity.Empleado;
 import com.grupo10.mundomarino.repository.AnimalRepository;
 import com.grupo10.mundomarino.repository.EmpleadoRepository;
+import java.util.Collections;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,8 +43,9 @@ public class AnimalService {
     }
 
     /**
-     * Asigna el cuidador indicado al animal. Lanza IllegalArgumentException si no existe animal o empleado,
-     * o si el empleado no es una instancia de Cuidador.
+     * Asigna el cuidador indicado al animal. Lanza IllegalArgumentException si
+     * no existe animal o empleado, o si el empleado no es una instancia de
+     * Cuidador.
      */
     public Animal asignarCuidador(Integer idAnimal, String idCuidador) {
         Animal animal = animalRepo.findById(idAnimal)
@@ -58,5 +60,15 @@ public class AnimalService {
 
         animal.setCuidador((Cuidador) empleado);
         return animalRepo.save(animal);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Animal> listarPorCuidadorId(String idCuidador) {
+        // buscar el cuidador por id; si no existe devuelve lista vacía o lanza
+        Empleado emp = empleadoRepo.findById(idCuidador).orElse(null);
+        if (emp == null || !(emp instanceof Cuidador)) {
+            return Collections.emptyList();
+        }
+        return animalRepo.findByCuidador((Cuidador) emp);
     }
 }

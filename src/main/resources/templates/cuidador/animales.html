@@ -1,15 +1,53 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Mis animales</title>
+  <p style="color:#888">Conectado como: <span th:text="${debugUser}">debugUser</span></p>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+
+  <main class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+      <h1>Animales a mi cargo</h1>
+    </div>
+
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Especie</th>
+            <th>Habitat</th>
+            <th>Zona</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="a : ${animales}">
+            <td th:text="${a.idAnimal}">1</td>
+            <td th:text="${a.nombre}">Nombre</td>
+            <td th:text="${a.especie != null ? a.especie.nombre : '—'}">Especie</td>
+            <td th:text="${a.habitat != null ? a.habitat.nombre : '—'}">Habitat</td>
+            <td th:text="${a.zona != null ? a.zona.nombre : '—'}">Zona</td>
+            <td>
+              <!-- acciones que quieras permitir al cuidador (ver ficha, editar si corresponde) -->
+              <a th:href="@{|/cuidador/animales/ver/${a.idAnimal}|}" class="btn-table btn-edit">Ver</a>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(animales)}">
+            <td colspan="6" style="text-align:center; color:#666;">No hay animales asignados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
 </html>
