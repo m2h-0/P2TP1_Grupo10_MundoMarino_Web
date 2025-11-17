@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <title>Especie - Form</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div th:replace="fragments/header :: mainNav"></div>
+
+        <main class="container">
+            <h1 th:text="${especie.idEspecie == null ? 'Nueva Especie' : 'Editar Especie'}">Formulario</h1>
+
+            <form th:action="@{/admin/especies/guardar}" th:object="${especie}" method="post">
+                <div th:if="${especie.idEspecie != null}" class="form-group">
+                    <label>ID</label>
+                    <input type="text" th:field="*{idEspecie}" readonly />
+                </div>
+                <div th:if="${especie.idEspecie == null}" class="form-group">
+                    <label>ID</label>
+                    <input type="text" value="(se generará automáticamente)" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" th:field="*{nombre}" required/>
+                </div>
+
+                <div class="form-group">
+                    <label>Nombre Científico</label>
+                    <input type="text" th:field="*{nombreCientifico}" />
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea th:field="*{descripcion}" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Zona</label>
+                    <select name="zonaId">
+                        <option value="">Sin zona</option>
+                        <option th:each="z : ${zonas}" th:value="${z.idZona}" 
+                                th:selected="${especie.zona != null && especie.zona.idZona == z.idZona}"
+                                th:text="${z.nombre}">Zona</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/admin/especies}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </main>
+
+        <div th:replace="fragments/footer :: footerFrag"></div>
+    </body>
+</html>

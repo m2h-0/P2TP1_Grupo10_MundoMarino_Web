@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -70,9 +71,11 @@ public class CuidadorController {
         return "dashboard/cuidador";
     }
 
-    @GetMapping("/editar")
-    public String cuidadorEditar(Model model) {
-        model.addAttribute("titulo", "Editar Ficha de Animal");
-        return "cuidador/editar";
+    @GetMapping("/animales/ver/{id}")
+    public String verFichaAnimal(@PathVariable Integer id, Model model) {
+        Animal animal = animalService.porId(id)
+                .orElseThrow(() -> new IllegalArgumentException("Animal no encontrado: " + id));
+        model.addAttribute("animal", animal);
+        return "cuidador/ver-ficha";
     }
 }
