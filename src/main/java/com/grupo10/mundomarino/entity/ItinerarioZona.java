@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.io.Serializable;
 
+/**
+ * Entidad para la relación Muchos a Muchos (Itinerario <-> Zona).
+ * Mapea la tabla 'itinerario_zona'.
+ */
 @Entity
 @Table(name = "itinerario_zona",
        uniqueConstraints = @UniqueConstraint(columnNames = {"id_itinerario", "id_zona"}))
@@ -19,15 +23,13 @@ public class ItinerarioZona implements Serializable {
     @Column(name = "id_itinerario_zona")
     private Long id;
 
+    // Relación ManyToOne a la tabla Itinerario
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_itinerario", nullable = false)
     private Itinerario itinerario;
 
+    // Relación ManyToOne a la tabla Zona
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "id_zona", nullable = false)
     private Zona zona;
-
-    // Si necesitas atributos extra (orden en el recorrido, tiempo estimado, etc.)
-    // puedes agregarlos aquí, por ejemplo:
-    // private Integer orden;
 }

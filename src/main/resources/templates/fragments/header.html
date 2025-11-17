@@ -18,16 +18,20 @@
                 </div>
 
                 <nav class="main-nav">
+                    <span sec:authorize="isAuthenticated()">
+                        <p class="btn btn-primary" style="background:#fff;color:#000;"><b th:text="${#authentication.name}"></b></p>
+                    </span>
+
                     <span sec:authorize="hasRole('ADMIN')">
-                        <a th:href="@{/dashboard/admin}">Gestión de Empleados</a>
+                        <a th:href="@{/admin}" class="btn btn-primary">Dashboard</a>
                     </span>
 
                     <span sec:authorize="hasRole('GUIA')">
-                        <a th:href="@{/dashboard/guia/}">Mis Itinerarios</a>
+                        <a th:href="@{/guia}" class="btn btn-primary">Dashboard</a>
                     </span>
 
                     <span sec:authorize="hasRole('CUIDADOR')">
-                        <a th:href="@{/dashboard/cuidador/}">Mis Animales</a>
+                        <a th:href="@{/cuidador}" class="btn btn-primary">Dashboard</a>
                     </span>
 
                     <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display:inline">

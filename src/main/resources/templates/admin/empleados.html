@@ -1,15 +1,56 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <title>Empleados - Admin</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
     </head>
     <body>
-        <div>TODO write content</div>
+        <div th:replace="fragments/header :: mainNav"></div>
+
+        <main class="container">
+            <div style="margin: 1em;"><h1>Empleados</h1>
+                <a th:href="@{/admin/empleados/nuevo}" class="btn btn-primary" style="margin: 1em 0;">Nuevo empleado</a>
+            </div>
+
+
+            <div class="table-container">
+                <table class="table" >
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Tipo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="e : ${empleados}">
+                            <td class="small" th:text="${e.idEmpleado}">ID</td>
+                            <td th:text="${e.nombre}">Nombre</td>
+                            <td th:text="${e.direccion}">Dirección</td>
+                            <td th:text="${e.telefono}">Tel</td>
+                            <td th:text="${e.tipo}">Tipo</td>
+                            <td>
+                                <div class="actions">
+                                    <a th:href="@{/admin/empleados/editar/{id}(id=${e.idEmpleado})}"
+                                       class="btn-table btn-edit" role="button">Editar</a>
+
+                                    <form th:action="@{/admin/empleados/borrar/{id}(id=${e.idEmpleado})}"
+                                          method="post" style="display:inline;">
+                                        <button type="submit" class="btn-table btn-delete">Borrar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <div th:replace="fragments/footer :: footerFrag"></div>
     </body>
 </html>
+

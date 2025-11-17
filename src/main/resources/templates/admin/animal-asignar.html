@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Asignar Cuidador</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+
+  <main class="container">
+    <h1>Asignar cuidador</h1>
+
+    <div th:if="${param.asignado != null}" class="alert alert-success">Cuidador asignado correctamente</div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+    <div class="card">
+      <div class="card-body">
+        <p><strong>Animal:</strong> <span th:text="${animal.nombre}">Nombre Animal</span>
+           (ID: <span th:text="${animal.idAnimal}">1</span>)</p>
+
+        <form th:action="@{/admin/animales/asignar}" method="post">
+          <input type="hidden" name="idAnimal" th:value="${animal.idAnimal}" />
+
+          <div class="form-group">
+            <label>Elegir cuidador</label>
+            <select name="idCuidador" class="form-control" required>
+              <option value="">Seleccionar cuidador</option>
+              <option th:each="c : ${cuidadores}" th:value="${c.idEmpleado}"
+                      th:text="${c.nombre + ' (' + c.idEmpleado + ')'}">Cuidador</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Asignar</button>
+            <a th:href="@{/admin/animales}" class="btn btn-secondary">Volver</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
+</html>

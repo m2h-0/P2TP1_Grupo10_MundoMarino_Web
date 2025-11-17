@@ -1,15 +1,53 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Especie - Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="fragments/header :: mainNav"></div>
+
+    <main class="container">
+        <h1 th:text="${#strings.isEmpty(especie.idEspecie) ? 'Nueva Especie' : 'Editar Especie'}">Formulario</h1>
+
+        <form th:action="@{/admin/especies/guardar}" th:object="${especie}" method="post">
+            <div class="form-group">
+                <label>ID</label>
+                <input type="text" th:field="*{idEspecie}" placeholder="ID (autogenerado al crear)" 
+                       th:attr="readonly=${especie.idEspecie != null}" />
+            </div>
+
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Nombre Científico</label>
+                <input type="text" th:field="*{nombreCientifico}" />
+            </div>
+
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea th:field="*{descripcion}" rows="4"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Zona</label>
+                <select th:field="*{zona.idZona}">
+                    <option value="" th:if="${#lists.isEmpty(zonas)}" selected>Sin zonas disponibles</option>
+                    <option th:each="z : ${zonas}" th:value="${z.idZona}" th:text="${z.nombre}">Zona</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/admin/especies}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </main>
+
+    <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
 </html>
