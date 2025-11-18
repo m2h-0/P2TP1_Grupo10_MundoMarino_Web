@@ -1,15 +1,44 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Mis Itinerarios - Mundo Marino</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+  <main class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+      <h1>Mis Itinerarios Asignados</h1>
+      <a th:href="@{/guia/itinerarios}" class="btn btn-primary" style="margin-left:1em;">Refrescar</a>
+    </div>
+
+    <div th:if="${error}" style="color: #d32f2f; padding: 1rem; background-color: #ffebee; border-radius: 4px; margin-bottom: 1rem;" th:text="${error}"></div>
+
+    <div th:if="${#lists.isEmpty(itinerarios)}" style="color: #0277bd; padding: 1rem; background-color: #e1f5fe; border-radius: 4px; margin-bottom: 1rem;">
+        No tienes itinerarios asignados en este momento.
+    </div>
+
+    <div th:if="${not #lists.isEmpty(itinerarios)}" class="table-container">
+      <table class="table">
+        <thead>
+          <tr><th>ID</th><th>Descripción</th><th>Longitud (km)</th><th>Máx. Visitantes</th><th>Especies</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          <tr th:each="itinerario : ${itinerarios}">
+            <td th:text="${itinerario.idItinerario}">1</td>
+            <td th:text="${itinerario.descRecorrido}">Descripción</td>
+            <td th:text="${itinerario.longitud}">0</td>
+            <td th:text="${itinerario.maxVisitantes}">0</td>
+            <td th:text="${itinerario.numEspecies}">0</td>
+            <td>
+              <a th:href="@{/guia/itinerarios/ver/{id}(id=${itinerario.idItinerario})}" class="btn-table btn-edit">Ver</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
 </html>
