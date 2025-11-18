@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head th:replace="fragments/header :: headFrag('Mundo Marino - Gestor')"></head>
+    <body>
+        <div th:replace="fragments/header :: mainNav"></div>
+        <main class="container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+                <h1>Información del Proyecto</h1>
+            </div>
+
+            <div class="card" style="padding: 2rem;">
+                <div class="form-group">
+                    <label><strong>PROGRAMACIÓN II - 2025</strong></label>
+                    <p>Técnicatura Superior en Informática Aplicada</p>
+                    <p>Comisión 2.603</p>
+                </div>
+                
+                <div class="form-group">
+                    <label><strong>INTEGRANTES</strong></label>
+                    <p>Grupo 10</p>
+                    <p>Matías Hayashi</p>
+                    <p>Ailin Nicliz</p>
+                    <p>Daiana Veliz</p>
+                </div>
+
+                    <a th:href="@{/}" class="btn btn-primary">Volver</a>
+                </div>
+            </div>
+        </main>
+
+        <div th:replace="fragments/footer :: footerFrag"></div>
+    </body>
+</html>

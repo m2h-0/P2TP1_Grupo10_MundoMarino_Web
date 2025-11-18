@@ -47,8 +47,9 @@ public class EspecieServiceImpl implements EspecieService {
         log.info("Actualizando especie id {}", id);
         Especie existente = especieRepository.findById(id)
                 .orElseThrow(() -> new EspecieNotFoundException("Especie no encontrada: " + id));
-        // actualizar campos relevantes (ajustar según entidad)
+        // actualizar campos relevantes
         existente.setNombre(especie.getNombre());
+        existente.setNombreCientifico(especie.getNombreCientifico());
         existente.setDescripcion(especie.getDescripcion());
         existente.setZona(especie.getZona());
         return especieRepository.save(existente);

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Ficha de Itinerario</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+
+  <main class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+      <h1 th:text="'Ficha de ' + ${itinerario.descRecorrido}">Ficha de Itinerario</h1>
+    </div>
+
+    <div class="card" style="padding: 2rem;">
+      <div class="form-group">
+        <label><strong>ID del Itinerario:</strong></label>
+        <p th:text="${itinerario.idItinerario}">ID</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Descripción:</strong></label>
+        <p th:text="${itinerario.descRecorrido != null ? itinerario.descRecorrido : 'Sin descripción'}">Descripción</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Longitud (km):</strong></label>
+        <p th:text="${itinerario.longitud}">0</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Máximo de Visitantes:</strong></label>
+        <p th:text="${itinerario.maxVisitantes}">0</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Cantidad de Especies:</strong></label>
+        <p th:text="${itinerario.numEspecies}">0</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Gu\u00eda Asignado:</strong></label>
+        <p th:text="${itinerario.guia != null ? itinerario.guia.nombre : 'Sin asignar'}">Gu\u00eda</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Especies:</strong></label>
+        <div th:if="${#lists.isEmpty(itinerario.itinerarioEspecies)}">
+          <p style="color: #999;">No hay especies asignadas</p>
+        </div>
+        <div th:if="${not #lists.isEmpty(itinerario.itinerarioEspecies)}">
+          <ul style="margin: 0; padding-left: 1.5rem;">
+            <li th:each="ie : ${itinerario.itinerarioEspecies}" th:text="${ie.especie.nombre}"></li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem;">
+        <a th:href="@{/guia/itinerarios}" class="btn btn-primary">Volver a Mis Itinerarios</a>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
+</html>

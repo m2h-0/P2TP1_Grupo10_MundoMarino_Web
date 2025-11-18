@@ -20,7 +20,7 @@ public class SecurityConfig {
         http
             // Páginas públicas
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/", "/login", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                .requestMatchers("/", "/login", "/creditos", "/css/**", "/js/**", "/images/**", "/error").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 // rutas de admin
                 .requestMatchers("/admin/**").hasRole("ADMIN")

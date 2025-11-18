@@ -1,53 +1,67 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>Especie - Form</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
-<body>
-    <div th:replace="fragments/header :: mainNav"></div>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="utf-8">
+        <title>Especies - Admin</title>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+    </head>
+    <body>
+        <div th:replace="fragments/header :: mainNav"></div>
 
-    <main class="container">
-        <h1 th:text="${#strings.isEmpty(especie.idEspecie) ? 'Nueva Especie' : 'Editar Especie'}">Formulario</h1>
-
-        <form th:action="@{/admin/especies/guardar}" th:object="${especie}" method="post">
-            <div class="form-group">
-                <label>ID</label>
-                <input type="text" th:field="*{idEspecie}" placeholder="ID (autogenerado al crear)" 
-                       th:attr="readonly=${especie.idEspecie != null}" />
+        <main class="container">
+            <div style="margin: 1em;">
+                <h1>Especies</h1>
+                <a th:href="@{/admin/especies/nuevo}" class="btn btn-primary" style="margin: 1em 0;">Nueva especie</a>
             </div>
 
-            <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" th:field="*{nombre}" required/>
+            <div th:if="${success}" class="alert alert-success" style="margin: 1em;">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-danger" style="margin: 1em;">
+                <span th:text="${error}"></span>
             </div>
 
-            <div class="form-group">
-                <label>Nombre Científico</label>
-                <input type="text" th:field="*{nombreCientifico}" />
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Nombre Científico</th>
+                            <th>Descripción</th>
+                            <th>Zona</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="e : ${especies}">
+                            <td class="small" th:text="${e.idEspecie}">ID</td>
+                            <td th:text="${e.nombre}">Nombre</td>
+                            <td th:text="${e.nombreCientifico}">Nombre Científico</td>
+                            <td th:text="${e.descripcion}">Descripción</td>
+                            <td th:text="${e.zona != null ? e.zona.nombre : 'N/A'}">Zona</td>
+                            <td>
+                                <div class="actions">
+                                    <a th:href="@{/admin/especies/editar/{id}(id=${e.idEspecie})}"
+                                       class="btn-table btn-edit" role="button">Editar</a>
+
+                                    <form th:action="@{/admin/especies/borrar/{id}(id=${e.idEspecie})}"
+                                          method="post" style="display:inline;">
+                                        <button type="submit" class="btn-table btn-delete" 
+                                                onclick="return confirm('¿Está seguro de que desea eliminar esta especie?');">Borrar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="form-group">
-                <label>Descripción</label>
-                <textarea th:field="*{descripcion}" rows="4"></textarea>
+            <div th:if="${#lists.isEmpty(especies)}" style="text-align: center; margin: 2em;">
+                <p>No hay especies registradas. <a th:href="@{/admin/especies/nuevo}">Crear una nueva</a></p>
             </div>
+        </main>
 
-            <div class="form-group">
-                <label>Zona</label>
-                <select th:field="*{zona.idZona}">
-                    <option value="" th:if="${#lists.isEmpty(zonas)}" selected>Sin zonas disponibles</option>
-                    <option th:each="z : ${zonas}" th:value="${z.idZona}" th:text="${z.nombre}">Zona</option>
-                </select>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a th:href="@{/admin/especies}" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </form>
-    </main>
-
-    <div th:replace="fragments/footer :: footerFrag"></div>
-</body>
+        <div th:replace="fragments/footer :: footerFrag"></div>
+    </body>
 </html>

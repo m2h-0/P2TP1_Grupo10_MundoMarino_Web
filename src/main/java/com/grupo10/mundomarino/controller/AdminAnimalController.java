@@ -27,6 +27,7 @@ public class AdminAnimalController {
     // GET /admin/animales
     @GetMapping
     public String listar(Model model) {
+        System.out.println("admin: Listar animales en animales-list.html");
         model.addAttribute("animales", animalService.listar());
         return "admin/animales-list";
     }

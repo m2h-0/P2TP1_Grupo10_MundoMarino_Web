@@ -3,6 +3,8 @@ package com.grupo10.mundomarino.service;
 import com.grupo10.mundomarino.entity.Itinerario;
 import com.grupo10.mundomarino.exception.ServiceException;
 import com.grupo10.mundomarino.repository.ItinerarioRepository;
+import com.grupo10.mundomarino.repository.EmpleadoRepository;
+import com.grupo10.mundomarino.entity.Empleado;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class ItinerarioServiceImpl implements ItinerarioService {
 
     private final ItinerarioRepository itinerarioRepository;
+    private final EmpleadoRepository empleadoRepository;
 
-    public ItinerarioServiceImpl(ItinerarioRepository itinerarioRepository) {
+    public ItinerarioServiceImpl(ItinerarioRepository itinerarioRepository, EmpleadoRepository empleadoRepository) {
         this.itinerarioRepository = itinerarioRepository;
+        this.empleadoRepository = empleadoRepository;
     }
 
     @Override
@@ -38,6 +42,8 @@ public class ItinerarioServiceImpl implements ItinerarioService {
     @Override
     public Itinerario crearItinerario(Itinerario itinerario) {
         log.info("Creando itinerario: {}", itinerario);
+        // numEspecies se calcula automáticamente basado en itinerarioEspecies
+        itinerario.setNumEspecies(0);
         return itinerarioRepository.save(itinerario);
     }
 
@@ -49,7 +55,7 @@ public class ItinerarioServiceImpl implements ItinerarioService {
         existente.setDescRecorrido(itinerario.getDescRecorrido());
         existente.setLongitud(itinerario.getLongitud());
         existente.setMaxVisitantes(itinerario.getMaxVisitantes());
-        existente.setNumEspecies(itinerario.getNumEspecies());
+        // No actualizar numEspecies directamente; se calcula desde la relación
         return itinerarioRepository.save(existente);
     }
 
@@ -57,6 +63,23 @@ public class ItinerarioServiceImpl implements ItinerarioService {
     public void eliminarItinerario(Integer id) {
         log.info("Eliminando itinerario id {}", id);
         itinerarioRepository.deleteById(id);
+    }
+
+    @Override
+    public void asignarGuia(Integer idItinerario, String idGuia) {
+        log.info("Asignando guia {} al itinerario {}", idGuia, idItinerario);
+        Itinerario itin = itinerarioRepository.findById(idItinerario)
+                .orElseThrow(() -> new IllegalArgumentException("Itinerario no encontrado: " + idItinerario));
+
+        Empleado guia = empleadoRepository.findById(idGuia)
+                .orElseThrow(() -> new IllegalArgumentException("Guia no encontrado: " + idGuia));
+
+        if (guia.getTipo() == null || !guia.getTipo().equalsIgnoreCase("GUIA")) {
+            throw new IllegalArgumentException("El empleado seleccionado no es un guía");
+        }
+
+        itin.setGuia(guia);
+        itinerarioRepository.save(itin);
     }
 
     @Override
