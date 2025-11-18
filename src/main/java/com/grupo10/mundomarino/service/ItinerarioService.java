@@ -11,4 +11,5 @@ public interface ItinerarioService {
     Itinerario actualizarItinerario(Integer id, Itinerario itinerario);
     void eliminarItinerario(Integer id);
     List<Itinerario> ordenarPorNumEspeciesDesc();
+    void asignarGuia(Integer idItinerario, String idGuia);
 }
