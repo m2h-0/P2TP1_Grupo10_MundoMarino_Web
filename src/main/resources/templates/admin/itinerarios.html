@@ -35,7 +35,8 @@
             <td th:text="${it.numEspecies}">0</td>
             <td th:text="${it.guia != null ? it.guia.nombre : 'Sin asignar'}">Guia</td>
             <td>
-              <a th:href="@{/admin/itinerarios/asignar/{id}(id=${it.idItinerario})}" class="btn-table btn-edit">Asignar</a>
+              <a th:href="@{/admin/itinerarios/asignar/{id}(id=${it.idItinerario})}" class="btn-table btn-edit">Guía</a>
+              <a th:href="@{/admin/itinerarios/especies/{id}(id=${it.idItinerario})}" class="btn-table btn-edit">Especies</a>
             </td>
           </tr>
         </tbody>

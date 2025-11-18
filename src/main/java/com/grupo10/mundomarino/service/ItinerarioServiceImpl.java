@@ -42,6 +42,8 @@ public class ItinerarioServiceImpl implements ItinerarioService {
     @Override
     public Itinerario crearItinerario(Itinerario itinerario) {
         log.info("Creando itinerario: {}", itinerario);
+        // numEspecies se calcula automáticamente basado en itinerarioEspecies
+        itinerario.setNumEspecies(0);
         return itinerarioRepository.save(itinerario);
     }
 
@@ -53,7 +55,7 @@ public class ItinerarioServiceImpl implements ItinerarioService {
         existente.setDescRecorrido(itinerario.getDescRecorrido());
         existente.setLongitud(itinerario.getLongitud());
         existente.setMaxVisitantes(itinerario.getMaxVisitantes());
-        existente.setNumEspecies(itinerario.getNumEspecies());
+        // No actualizar numEspecies directamente; se calcula desde la relación
         return itinerarioRepository.save(existente);
     }
 

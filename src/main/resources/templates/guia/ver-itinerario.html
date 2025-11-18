@@ -40,8 +40,20 @@
       </div>
 
       <div class="form-group">
-        <label><strong>Guía Asignado:</strong></label>
-        <p th:text="${itinerario.guia != null ? itinerario.guia.nombre : 'Sin asignar'}">Guía</p>
+        <label><strong>Gu\u00eda Asignado:</strong></label>
+        <p th:text="${itinerario.guia != null ? itinerario.guia.nombre : 'Sin asignar'}">Gu\u00eda</p>
+      </div>
+
+      <div class="form-group">
+        <label><strong>Especies:</strong></label>
+        <div th:if="${#lists.isEmpty(itinerario.itinerarioEspecies)}">
+          <p style="color: #999;">No hay especies asignadas</p>
+        </div>
+        <div th:if="${not #lists.isEmpty(itinerario.itinerarioEspecies)}">
+          <ul style="margin: 0; padding-left: 1.5rem;">
+            <li th:each="ie : ${itinerario.itinerarioEspecies}" th:text="${ie.especie.nombre}"></li>
+          </ul>
+        </div>
       </div>
 
       <div style="margin-top: 2rem; border-top: 1px solid #ddd; padding-top: 1rem;">

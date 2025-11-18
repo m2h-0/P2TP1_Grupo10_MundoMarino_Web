@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Asignar Especies - Itinerario</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+  <div th:replace="fragments/header :: mainNav"></div>
+  <main class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+      <h1 th:text="'Asignar Especies a: ' + ${itinerario.descRecorrido}">Asignar Especies</h1>
+    </div>
+
+    <div th:if="${success}" style="color: #2e7d32; padding: 1rem; background-color: #e8f5e9; border-radius: 4px; margin-bottom: 1rem;" th:text="${success}"></div>
+    <div th:if="${error}" style="color: #d32f2f; padding: 1rem; background-color: #ffebee; border-radius: 4px; margin-bottom: 1rem;" th:text="${error}"></div>
+
+    <div class="card" style="padding: 2rem; margin-bottom: 2rem;">
+      <h2>Especies Disponibles</h2>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Nombre Científico</th><th>Zona</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            <tr th:each="especie : ${todasEspecies}">
+              <td th:text="${especie.idEspecie}">ID</td>
+              <td th:text="${especie.nombre}">Nombre</td>
+              <td th:text="${especie.nombreCientifico != null ? especie.nombreCientifico : '—'}">N/A</td>
+              <td th:text="${especie.zona != null ? especie.zona.nombre : '—'}">Zona</td>
+              <td>
+                <th:block th:if="${!#lists.contains(especiesAsignadas, especie)}">
+                  <form th:action="@{/admin/itinerarios/especies/vincular}" method="post" style="display:inline;">
+                    <input type="hidden" name="idItinerario" th:value="${itinerario.idItinerario}">
+                    <input type="hidden" name="idEspecie" th:value="${especie.idEspecie}">
+                    <button type="submit" class="btn-table btn-edit">+ Agregar</button>
+                  </form>
+                </th:block>
+                <th:block th:if="${#lists.contains(especiesAsignadas, especie)}">
+                  <span style="color: #999;">Asignada</span>
+                </th:block>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 2rem;">
+      <h2>Especies Asignadas al Itinerario</h2>
+      <div th:if="${#lists.isEmpty(especiesAsignadas)}" style="color: #0277bd; padding: 1rem; background-color: #e1f5fe; border-radius: 4px;">
+        No hay especies asignadas aún.
+      </div>
+      <div th:if="${not #lists.isEmpty(especiesAsignadas)}" class="table-container">
+        <table class="table">
+          <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Nombre Científico</th><th>Zona</th><th>Acciones</th></tr>
+          </thead>
+          <tbody>
+            <tr th:each="especie : ${especiesAsignadas}">
+              <td th:text="${especie.idEspecie}">ID</td>
+              <td th:text="${especie.nombre}">Nombre</td>
+              <td th:text="${especie.nombreCientifico != null ? especie.nombreCientifico : '—'}">N/A</td>
+              <td th:text="${especie.zona != null ? especie.zona.nombre : '—'}">Zona</td>
+              <td>
+                <form th:action="@{/admin/itinerarios/especies/desvincular}" method="post" style="display:inline;" onsubmit="return confirm('¿Desasignar esta especie?');">
+                  <input type="hidden" name="idItinerario" th:value="${itinerario.idItinerario}">
+                  <input type="hidden" name="idEspecie" th:value="${especie.idEspecie}">
+                  <button type="submit" class="btn-table btn-delete" style="background-color: #d32f2f; color: white;">- Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <a th:href="@{/admin/itinerarios}" class="btn btn-primary">Volver a Itinerarios</a>
+    </div>
+  </main>
+  <div th:replace="fragments/footer :: footerFrag"></div>
+</body>
+</html>
